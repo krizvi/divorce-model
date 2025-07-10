@@ -3,7 +3,7 @@ __pycache__/
 venv/
 
 # Ignore model file if deploying it differently
-*.pth
+# *.pth
 
 # (Optional) ignore system/editor files
 .DS_Store
