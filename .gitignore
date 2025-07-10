@@ -1,0 +1,10 @@
+# Ignore Python cache & virtual environment
+__pycache__/
+venv/
+
+# Ignore model file if deploying it differently
+*.pth
+
+# (Optional) ignore system/editor files
+.DS_Store
+*.swp

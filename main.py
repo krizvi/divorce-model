@@ -1,0 +1,27 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+import torch
+import numpy as np
+from model import DivorcePredictor
+
+app = FastAPI()
+
+# Define the input feature size (match training!)
+input_size = 26  # Adjust to your real number of features!
+
+# Load model
+model = DivorcePredictor(input_size)
+model.load_state_dict(torch.load("divorce_predictor_model.pth"))
+model.eval()
+
+# Define input data model for the API
+class DivorceInput(BaseModel):
+    features: list  # a list of 26 numbers
+
+@app.post("/predict")
+def predict(input: DivorceInput):
+    with torch.no_grad():
+        x = torch.tensor([input.features], dtype=torch.float32)
+        output = model(x)
+        prediction = float(output.item())
+        return {"divorce_probability": prediction}
