@@ -3,8 +3,17 @@ from pydantic import BaseModel
 import torch
 import numpy as np
 from model import DivorcePredictor
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or restrict to ["https://metismesh.com"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define the input feature size (match training!)
 input_size = 26  # Adjust to your real number of features!
