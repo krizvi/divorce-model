@@ -20,16 +20,16 @@ input_size = 26  # Adjust to your real number of features!
 
 # Load model
 model = DivorcePredictor(input_size)
-model.load_state_dict(torch.load("divorce_predictor_model.pth"))
+model.load_state_dict(torch.load("divorce_predictor_model.pth")) # Question: load_state_dict?
 model.eval()
 
 # Define input data model for the API
 class DivorceInput(BaseModel):
-    features: list  # a list of 26 numbers
+    features: list  # a list of 26 numbers Question: WHat is list
 
 @app.post("/predict")
 def predict(input: DivorceInput):
-    with torch.no_grad():
+    with torch.no_grad(): # Question: what does no_grad
         x = torch.tensor([input.features], dtype=torch.float32)
         output = model(x)
         prediction = float(output.item())
